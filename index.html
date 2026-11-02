@@ -4627,6 +4627,79 @@ html, body { max-width: 100%; overflow-x: hidden; }
 /* Hidden Patterns return control: hidden by default, compact when activated. */
 #haven-hidden-return[hidden]{display:none!important;}
 #haven-hidden-return:not([hidden]){display:inline-flex!important;width:auto!important;max-width:min(320px,calc(100% - 36px))!important;align-items:center;justify-content:center;}
+
+/* NOV 2: force full-width active clearing views; avoid narrow content columns. */
+@media (max-width: 700px) {
+  .section.active[data-section="wounds"],
+  .section.active[data-section="wounds"] > .power-modern-shell,
+  .section.active[data-section="wounds"] #wound-modern-panel,
+  .section.active[data-section="wounds"] .power-modern-search,
+  .section.active[data-section="wounds"] .power-modern-grid,
+  .section.active[data-section="wounds"] .power-modern-section-view,
+  .section.active[data-section="wounds"] .power-modern-detail {
+    display:block; width:100%!important; max-width:none!important; min-width:0!important;
+    box-sizing:border-box!important; float:none!important;
+    grid-column:1/-1!important;
+  }
+  .section.active[data-section="wounds"] .power-modern-grid {
+    display:grid!important; grid-template-columns:minmax(0,1fr)!important;
+    gap:12px!important;
+  }
+  .section.active[data-section="wounds"] .power-modern-shell {padding:16px!important;}
+  .section.active[data-section="wounds"] .power-modern-search {display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:9px!important;}
+  .section.active[data-section="wounds"] .power-modern-search input,
+  .section.active[data-section="wounds"] .power-modern-search button {width:100%!important;min-width:0!important;max-width:100%!important;}
+  .section.active[data-section="wounds"] .power-modern-filters {display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;gap:8px!important;}
+  .section.active[data-section="wounds"] .power-modern-filters button {width:auto!important;max-width:100%!important;}
+  .section.active[data-section="wounds"] .power-modern-category {width:100%!important;min-width:0!important;min-height:66px!important;padding:13px 38px 13px 14px!important;}
+  .section.active[data-section="wounds"] .power-modern-category strong {overflow-wrap:normal!important;word-break:normal!important;}
+  .section.active[data-section="wounds"] .power-modern-pair {display:grid!important;grid-template-columns:minmax(0,1fr)!important;}
+  .section.active[data-section="wounds"] .power-modern-value {width:100%!important;}
+  #prompt-library-inline-results .prompt-library-wrap,
+  #prompt-library-inline-results .prompt-category,
+  #prompt-library-inline-results .prompt-category-body {width:100%!important;max-width:100%!important;min-width:0!important;}
+}
+
+/* 2026-11-02: Active clearing section must never inherit half-width columns. */
+@media screen and (max-width: 700px) {
+  #content { display:block !important; width:100% !important; min-width:0 !important; max-width:none !important; }
+  #content > .section.active {
+    display:block !important; position:relative !important;
+    width:100% !important; min-width:0 !important; max-width:none !important;
+    flex:none !important; grid-column:1 / -1 !important;
+    margin-left:0 !important; margin-right:0 !important;
+    float:none !important; clear:both !important;
+  }
+  #content > .section.active > .power-modern-shell,
+  #content > .section.active > .section-head,
+  #content > .section.active .power-modern-detail,
+  #content > .section.active .power-modern-section-view {
+    display:block; width:100% !important; min-width:0 !important;
+    max-width:none !important; box-sizing:border-box !important;
+    grid-column:1 / -1 !important;
+  }
+  #content > .section.active .power-modern-search {
+    display:grid !important; grid-template-columns:minmax(0,1fr) !important;
+    width:100% !important; gap:10px !important;
+  }
+  #content > .section.active .power-modern-search > input,
+  #content > .section.active .power-modern-search > button {
+    width:100% !important; min-width:0 !important; max-width:100% !important;
+  }
+  #content > .section.active .power-modern-grid,
+  #content > .section.active .power-modern-pair,
+  #content > .section.active .power-flow-choices {
+    display:grid !important; grid-template-columns:minmax(0,1fr) !important;
+    width:100% !important; min-width:0 !important;
+  }
+  #content > .section.active .power-modern-filters {display:flex !important;flex-wrap:wrap !important;gap:8px !important}
+  #content > .section.active .power-modern-filters > button {width:auto !important; flex:none !important}
+  #content > .section.active .power-modern-choice {width:100% !important;min-width:0 !important}
+  #content > .section.active .power-modern-category strong,
+  #content > .section.active .power-modern-value strong {word-break:normal !important;overflow-wrap:break-word !important}
+  #content > .section.active .section-head {display:flex !important;flex-wrap:wrap !important;gap:10px !important}
+}
+
 </style>
 <style id="haven-hidden-styles">
 #haven-hidden-cover{margin-top:14px}#haven-hidden-cover[hidden],#haven-hidden-workspace[hidden],#haven-hidden-intro[hidden]{display:none!important}
@@ -4635,6 +4708,213 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .haven-hidden-quick-grid button{font-size:.8rem;text-align:center;padding:10px 6px;cursor:pointer;border:1px solid rgba(216,181,106,.4);background:#17181f;color:#f5dfaa}
 .haven-hidden-question-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.haven-hidden-question-grid button{text-align:left;min-height:76px;cursor:pointer;line-height:1.4}
 @media(max-width:650px){.haven-hidden-quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.haven-hidden-question-grid{grid-template-columns:1fr}}
+</style>
+<style>
+
+/* Mobile drilldown readability repair — layout only, no changes to flows */
+@media screen and (max-width: 700px) {
+  html, body { max-width:100%; overflow-x:hidden; }
+  .shell, main, .section, [data-section] { min-width:0; max-width:100%; }
+  [data-section] .power-modern-shell,
+  [data-section] .power-modern-detail,
+  [data-section] .power-modern-section-view,
+  [data-section] .power-flow-panel,
+  [data-section] .power-flow-location,
+  [data-section] .power-flow-script { width:100%; max-width:100%; min-width:0; box-sizing:border-box; }
+  [data-section] .power-modern-shell,
+  [data-section] .power-modern-detail { padding:12px; }
+  [data-section] .power-flow-panel { padding:12px; }
+  [data-section] .power-modern-pair,
+  [data-section] .power-modern-grid,
+  [data-section] .power-flow-choices { display:grid; grid-template-columns:minmax(0,1fr) !important; gap:12px; }
+  [data-section] .power-modern-value { min-width:0; width:100%; padding:16px; }
+  [data-section] .power-modern-value strong,
+  [data-section] .power-modern-value span,
+  [data-section] .power-flow-panel h4,
+  [data-section] .power-flow-panel p,
+  [data-section] .power-modern-detail h3,
+  [data-section] .power-modern-choice { overflow-wrap:normal; word-break:normal; hyphens:none; white-space:normal; }
+  [data-section] .power-modern-value strong { font-size:clamp(1rem,4.8vw,1.25rem); line-height:1.4; }
+  [data-section] .power-modern-value span { font-size:.8rem; line-height:1.4; }
+  [data-section] .power-flow-option { min-width:0; white-space:normal; }
+  [data-section] input, [data-section] textarea, [data-section] select { max-width:100%; min-width:0; }
+}
+
+/* November 1 mobile audit: keep drilldowns full-width and readable. */
+@media (max-width:700px) {
+  .section .power-modern-shell, .section .power-modern-detail,
+  .section .power-modern-section-view, .section .power-flow-panel,
+  .section .power-flow-location, .section .power-flow-script,
+  .section .power-modern-pair, .section .power-modern-value,
+  .section .power-modern-grid, .section .power-flow-choices {
+    box-sizing:border-box; min-width:0; max-width:100%;
+  }
+  .section .power-modern-pair, .section .power-modern-grid,
+  .section .power-flow-choices { grid-template-columns:minmax(0,1fr)!important; }
+  .section .power-modern-value, .section .power-modern-choice,
+  .section .power-flow-option { width:100%; min-width:0; }
+  .section .power-modern-value strong, .section .power-modern-value span,
+  .section .power-modern-detail h3, .section .power-flow-panel h4,
+  .section .power-flow-panel p, .section .power-flow-script p {
+    white-space:normal!important; word-break:normal!important;
+    overflow-wrap:break-word!important; hyphens:none!important;
+  }
+  .section .power-modern-value strong {font-size:1.08rem!important;line-height:1.42!important}
+  .section .power-modern-value {padding:16px!important}
+  .section .power-flow-option {min-height:46px;line-height:1.3}
+  .relationship-flow-row, .relationship-chess-stepbar,
+  .relationship-chess-choice-grid, .relationship-chess-scan-grid,
+  .relationship-chess-objective-grid, .relationship-chess-move-grid,
+  .relationship-chess-nested-grid, .relationship-chess-drilldown-body,
+  .relationship-chess-piece-detail-grid, .relationship-chess-objective-detail-grid {
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+  .relationship-flow-step, .relationship-chess-step {
+    font-size:.94rem!important;line-height:1.4!important;padding:12px!important;text-align:left!important;
+  }
+  .relationship-flow-step span, .relationship-chess-step strong {font-size:.94rem!important;line-height:1.3!important}
+  .prompt-library-wrap, .haven-eight-panel, .haven-notice,
+  .haven-eight-card, .prompt-question-box, .sensory-question-area,
+  .relationship-play-panel, .relationship-chess-panel, .checkpoint-split-section {
+    box-sizing:border-box;min-width:0;max-width:100%;
+  }
+  .haven-hidden-question-grid, .haven-question-grid,
+  .sensory-question-area ol {grid-template-columns:minmax(0,1fr)!important}
+}
+</style>
+
+<style id="core-two-column-mobile-20261102">
+/* Core Blocks section selection: two columns on phones.
+   The remove/restore details remain stacked for readability. */
+@media screen and (max-width:700px) {
+  .section.active[data-section="core"],
+  .section.active[data-section="core"] .power-modern-shell,
+  .section.active[data-section="core"] .power-modern-section-view,
+  .section.active[data-section="core"] .power-modern-panel {
+    width:100% !important; max-width:100% !important; min-width:0 !important;
+    box-sizing:border-box !important;
+  }
+  .section.active[data-section="core"] .power-modern-grid,
+  [data-section="core"] .power-modern-grid {
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:10px !important; width:100% !important; min-width:0 !important;
+  }
+  [data-section="core"] .power-modern-category {
+    width:100% !important; min-width:0 !important;
+    padding:12px 22px 12px 8px !important;
+    text-align:center !important;
+  }
+  [data-section="core"] .power-modern-category strong {
+    font-size:clamp(.85rem,3.7vw,1rem) !important;
+    line-height:1.22 !important; overflow-wrap:normal !important; word-break:normal !important;
+  }
+}
+</style>
+<style id="haven-mobile-viewport-panel-fix">
+/* 2026-11-02: Mobile viewport-safe clearing panels. Parent grids must not halve the view. */
+@media screen and (max-width:700px){
+  #content {display:block!important; width:100%!important; max-width:none!important;}
+  #content > .section.active {display:block!important;width:100%!important;max-width:none!important;min-width:0!important;float:none!important;grid-column:1/-1!important;}
+  #content > .section.active .power-modern-shell {
+    display:block!important;box-sizing:border-box!important;
+    width:calc(100vw - 20px)!important;max-width:calc(100vw - 20px)!important;
+    min-width:0!important;position:relative!important;
+    left:50%!important;transform:translateX(-50%)!important;
+    margin-left:0!important;margin-right:0!important;padding:16px!important;
+  }
+  #content > .section.active .power-modern-shell > *{min-width:0;max-width:100%;}
+  #content > .section.active .power-modern-search{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:10px!important;width:100%!important;}
+  #content > .section.active .power-modern-search input{width:100%!important;min-width:0!important;}
+  #content > .section.active .power-modern-filters{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;gap:8px!important;}
+  #content > .section.active .power-modern-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;width:100%!important;min-width:0!important;}
+  #content > .section.active .power-modern-grid .power-modern-choice{min-width:0!important;width:100%!important;padding:12px 24px 12px 10px!important;font-size:.9rem!important;overflow-wrap:normal!important;word-break:normal!important;}
+  #content > .section.active .power-modern-grid .power-modern-arrow{right:7px!important;font-size:18px!important;}
+  #content > .section.active .power-modern-detail,
+  #content > .section.active .power-modern-section-view,
+  #content > .section.active .power-flow-panel{width:100%!important;max-width:100%!important;min-width:0!important;}
+  #content > .section.active .power-modern-pair{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:12px!important;}
+  #content > .section.active .power-modern-pair > *{min-width:0!important;}
+}
+@media screen and (max-width:360px){
+  #content > .section.active .power-modern-shell{width:calc(100vw - 12px)!important;max-width:calc(100vw - 12px)!important;}
+}
+</style>
+
+<style id="haven-mobile-actual-panel-repair">
+@media (max-width:700px){
+  /* Use the screen width for the complete clearing panel, never a grid track. */
+  #content > section.section.active[data-section] > .power-modern-shell{
+    position:relative!important;left:auto!important;right:auto!important;transform:none!important;
+    width:100%!important;min-width:0!important;max-width:none!important;
+    margin:14px 0 0!important;padding:14px!important;box-sizing:border-box!important;
+  }
+  #content > section.section.active[data-section]{width:100%!important;min-width:0!important;max-width:100%!important;}
+  #content > section.section.active[data-section] .power-modern-grid{
+    display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;
+  }
+  #content > section.section.active[data-section] .power-modern-category,
+  #content > section.section.active[data-section] .power-modern-choice{
+    min-width:0!important;width:100%!important;box-sizing:border-box!important;
+    padding:12px 22px 12px 9px!important;font-size:.88rem!important;
+  }
+  #content > section.section.active[data-section] .power-modern-search{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:8px!important;}
+  #content > section.section.active[data-section] .power-modern-search input{min-width:0!important;width:100%!important;}
+  #content > section.section.active[data-section] .power-modern-filters{display:flex!important;flex-flow:row wrap!important;gap:8px!important;}
+  #content > section.section.active[data-section] .power-modern-pair{display:grid!important;grid-template-columns:minmax(0,1fr)!important;}
+}
+</style>
+
+<style id="haven-eight-yes-route-fix">
+/* Respect the hidden state when a prompt switches into the chart drilldown. */
+#prompt-library-group-list[hidden],
+#haven-eight-collection[hidden],
+#haven-eight-workspace[hidden],
+#prompt-library-inline-results[hidden] { display:none !important; }
+/* Other navigation listeners may re-show the library; the active chart route wins. */
+body:has(#prompt-library-inline-results.haven-eight-chart-active) #prompt-library-group-list,
+body:has(#prompt-library-inline-results.haven-eight-chart-active) #haven-eight-collection,
+body:has(#prompt-library-inline-results.haven-eight-chart-active) #prompt-library-dashboard-intro,
+body:has(#prompt-library-inline-results.haven-eight-chart-active) #prompt-library-experiences-intro {display:none !important;}
+/* The native chart drilldown gets ONE contextual Back button. */
+#prompt-library-inline-results.haven-eight-chart-active > .cup-back { display:none !important; }
+@media(max-width:700px){
+  #prompt-library-inline-results.haven-eight-chart-active{
+    width:calc(100% + 24px) !important;
+    max-width:none !important;
+    margin-left:-12px !important;
+    margin-right:-12px !important;
+    min-width:0 !important;
+  }
+  #prompt-library-inline-results.haven-eight-chart-active #prompt-library-inline-content,
+  #prompt-library-inline-results.haven-eight-chart-active .prompt-library-wrap,
+  #prompt-library-inline-results.haven-eight-chart-active .search-panel{
+    min-width:0 !important;
+    width:100% !important;
+    max-width:100% !important;
+  }
+  #prompt-library-inline-results.haven-eight-chart-active .precheck-grid{
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:8px !important;
+  }
+  #prompt-library-inline-results.haven-eight-chart-active .precheck-column{ min-width:0 !important; }
+  #prompt-library-inline-results.haven-eight-chart-active .precheck-item{
+    width:100% !important; min-width:0 !important;
+    overflow-wrap:normal !important; word-break:normal !important;
+    font-size:clamp(.83rem,3.6vw,1rem) !important;
+    padding:10px 8px !important;
+  }
+  #prompt-library-inline-results.haven-eight-chart-active .search-row{
+    display:grid !important; grid-template-columns:minmax(0,1fr) auto !important;
+  }
+  #prompt-library-inline-results.haven-eight-chart-active .search-row input{min-width:0 !important;width:100% !important;}
+}
+@media(max-width:700px){
+ #prompt-library-home > #prompt-library-inline-results.haven-eight-chart-active{
+ width:100% !important; margin:0 !important; padding:0 !important;
+ }
+}
 </style>
 </head>
 <body>
@@ -5366,6 +5646,23 @@ function renderQuickStart() {
           </div>
         </div>
 
+
+
+      </div>
+
+      <div class="clearing-charts-header-row">
+        <div class="pill dashboard-section-pill" id="alignment-clearing-charts">Alignment Clearing Charts</div>
+        <div class="clearing-charts-return-slot" id="clearing-charts-return-slot"></div>
+      </div>
+      <div class="main-section-grid">
+        ${clearingChartCards.map(renderCard).join('')}
+      </div>
+
+      <div class="pill dashboard-section-pill" id="alignment-reference-vault">Alignment Reference Vault</div>
+      <div class="main-section-grid more-section-grid">
+        ${referenceVaultCards.map(renderCard).join('')}
+      </div>
+
         <div class="prompt-library-landing" id="prompt-library-home">
           <div class="pill dashboard-subsection-pill">Muscle Testing Prompt Library</div>
           <p class="prompt-library-tagline">Not sure what to ask? Find an everyday question, then use the same numbered Odd or Even chart system to locate your Quick Link and chart.</p>
@@ -5505,21 +5802,6 @@ function renderQuickStart() {
             <div id="prompt-library-inline-content"></div>
           </div>
         </div>
-
-      </div>
-
-      <div class="clearing-charts-header-row">
-        <div class="pill dashboard-section-pill" id="alignment-clearing-charts">Alignment Clearing Charts</div>
-        <div class="clearing-charts-return-slot" id="clearing-charts-return-slot"></div>
-      </div>
-      <div class="main-section-grid">
-        ${clearingChartCards.map(renderCard).join('')}
-      </div>
-
-      <div class="pill dashboard-section-pill" id="alignment-reference-vault">Alignment Reference Vault</div>
-      <div class="main-section-grid more-section-grid">
-        ${referenceVaultCards.map(renderCard).join('')}
-      </div>
 
     </div>`;
   // Sensory/Energetic Regulation — additive. Other regulation branches are starter suggestions pending review.
@@ -7018,7 +7300,35 @@ function promptFinderOpenChart(tab,special){
   }
   // All other section destinations use the app's existing section navigation.
   const target=document.querySelector(`.section[data-section="${tab}"]`);
-  if(target)openToolboxSection(tab);
+  if(!target)return;
+  const fromEight=document.getElementById('prompt-library-inline-results')?.classList.contains('haven-eight-chart-active');
+  openToolboxSection(tab);
+  if(fromEight){
+    // The section is activated by the normal app router, but older smooth-scroll
+    // handlers can leave the viewport on the previous prompt panel.
+    const showTarget=()=>{
+      const opened=document.querySelector(`.section.active[data-section="${tab}"]`);
+      if(!opened)return;
+      const r=opened.getBoundingClientRect();
+      window.scrollTo({top:Math.max(0,window.scrollY+r.top-12),behavior:'instant'});
+    };
+    showTarget();
+    requestAnimationFrame(showTarget);
+    setTimeout(showTarget,110);
+    setTimeout(showTarget,330);
+  }
+  // The YES → clearing-chart flow must not dock the opened chart inside a
+  // half-width prompt choice column. The normal app click listener can move
+  // the destination during bubbling; restore it to the main section host after.
+  if(document.getElementById('prompt-library-inline-results')?.classList.contains('haven-eight-chart-active')){
+    setTimeout(()=>{
+      const section=document.querySelector('.section.active.app-inline-destination');
+      if(section && section.closest('#prompt-library-inline-results')){
+        const main=document.getElementById('content');
+        if(main){main.appendChild(section);section.classList.remove('app-inline-destination');}
+      }
+    },0);
+  }
 }
 function closePromptLibraryCategory(){
   havenFindItQuestion='';
@@ -11130,7 +11440,7 @@ function havenEightNativeLinks(){
 
 function havenEightReturnFromCharts(){
  const eightCollection=document.getElementById('haven-eight-collection');if(eightCollection)eightCollection.hidden=false;
- const inline=document.getElementById('prompt-library-inline-results');if(inline)inline.hidden=true;
+ const inline=document.getElementById('prompt-library-inline-results');if(inline){inline.hidden=true;inline.classList.remove('haven-eight-chart-active');const collection=document.getElementById('haven-eight-collection');if(collection && inline.parentElement!==collection)collection.appendChild(inline);}
  const list=document.getElementById('prompt-library-group-list');if(list)list.hidden=false;
  window.havenEightUsingNativeLinks=false;havenFindItQuestion='';
  havenEightState.screen=havenEightState.question===12?'clear':'question';havenEightRender();
@@ -11142,13 +11452,23 @@ function havenEightNativeCharts(){
  const part=havenEightParts[havenEightState.part];
  const selected=havenEightState.whySelected;
  havenFindItQuestion=(havenEightState.question!==12 && Number.isInteger(selected)) ? havenEightInvestigations[part.name][havenEightState.question][selected] : part.questions[havenEightState.question];
- const inline=document.getElementById('prompt-library-inline-results');if(inline)inline.hidden=false;
+ const inline=document.getElementById('prompt-library-inline-results');if(inline){inline.hidden=false;inline.classList.add('haven-eight-chart-active');const landing=document.getElementById('prompt-library-home');if(landing && inline.parentElement!==landing)landing.appendChild(inline);}
  const list=document.getElementById('prompt-library-group-list');if(list)list.hidden=true;
  promptFinderOpenLink(3);
  const backButton=document.querySelector('#prompt-library-inline-content .cup-back');
  if(backButton){backButton.setAttribute('onclick','havenEightReturnFromCharts()');backButton.textContent=havenEightState.question===12?'← Back to Question 13':'← Back to Investigate Why';}
  const group='prompt-finder-charts';
  if(havenEightState.chartParity)filterOddEvenItems(group,havenEightState.chartParity);
+ // After YES, focus the small chart selector belonging to this question,
+ // rather than leaving the viewport at the old question or jumping to the main charts.
+ const selector=document.getElementById('prompt-library-inline-content');
+ if(selector){
+   requestAnimationFrame(()=>requestAnimationFrame(()=>{
+     if(!inline || inline.hidden || !inline.classList.contains('haven-eight-chart-active'))return;
+     const rect=selector.getBoundingClientRect();
+     window.scrollTo({top:Math.max(0,window.scrollY+rect.top-16),behavior:'instant'});
+   }));
+ }
 }
 
 function havenEightSetChartParity(v){havenEightState.chartParity=v;havenEightRender();}
@@ -11161,6 +11481,12 @@ function havenEightSetChartParity(v){havenEightState.chartParity=v;havenEightRen
     const inline=document.getElementById('prompt-library-inline-results');
     if(!list||!inline)return;
     const groups=Array.from(list.children).filter(el=>el.classList.contains('prompt-library-group'));
+    if(inline.classList.contains('haven-eight-chart-active')){
+      const landing=document.getElementById('prompt-library-home');
+      if(landing && inline.parentElement!==landing)landing.appendChild(inline);
+      list.hidden=true;
+      return;
+    }
     const target=groups[index];if(!target)return;
     list.hidden=false;
     // Only one results view at a time; retain the location of every other collection.
@@ -11545,5 +11871,147 @@ const havenHiddenObserver=new MutationObserver(()=>{const cover=document.getElem
 havenHiddenObserver.observe(document.body,{childList:true,subtree:true});
 </script>
 <button id="haven-hidden-return" type="button" class="prompt-library-button gold" style="position:fixed;bottom:20px;left:18px;z-index:92;max-width:calc(100% - 36px)" hidden onclick="havenHiddenReturn()">← Return to Hidden Patterns</button>
+<script>
+/* Navigation cleanup: only the visible prompt panel's first matching Back action is shown. */
+(function(){
+ let busy=false;
+ function clean(){
+  if(busy)return;busy=true;
+  try{
+   const root=document.getElementById('prompt-library-inline-results');
+   if(!root||root.hidden)return;
+   const buttons=[...root.querySelectorAll('button')];
+   const seen=new Set();
+   for(const b of buttons){
+    if(b.closest('[hidden]')||b.closest('.prompt-category[hidden]'))continue;
+    const label=(b.textContent||'').replace(/\s+/g,' ').trim().replace(/^[←‹]\s*/, '').toLowerCase();
+    if(label==='back to prompt library'){
+     if(seen.has(label)){if(b.style.display!=='none')b.style.display='none';}
+     else {seen.add(label);if(b.style.display==='none')b.style.display='';}
+    }
+   }
+  }finally{busy=false;}
+ }
+ const start=()=>{const root=document.getElementById('prompt-library-inline-results');if(!root)return;new MutationObserver(clean).observe(root,{childList:true,subtree:true});document.addEventListener('click',()=>queueMicrotask(clean),true);clean();};
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+})();
+</script>
+
+<script id="haven-mobile-panel-width-guard">
+(function(){
+  function repair(){
+    if(innerWidth>700)return;
+    const available=Math.max(260,innerWidth-28);
+    document.querySelectorAll('#content > section.section.active[data-section] > .power-modern-shell').forEach(el=>{
+      el.style.setProperty('width',available+'px','important');
+      el.style.setProperty('max-width','none','important');
+      el.style.setProperty('transform','none','important');
+      const x=el.getBoundingClientRect().left;
+      const desired=14;
+      const previous=parseFloat(getComputedStyle(el).marginLeft)||0;
+      el.style.setProperty('margin-left',(previous+desired-x)+'px','important');
+    });
+  }
+  let pending=false;
+  function schedule(){if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;repair();});}
+  document.addEventListener('click',schedule,true);
+  window.addEventListener('resize',schedule);
+  const start=()=>{new MutationObserver(schedule).observe(document.getElementById('content')||document.body,{subtree:true,attributes:true,attributeFilter:['class','hidden'],childList:true});schedule();};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+})();
+</script>
+
+<style id="haven-inplace-chart-route-styles">
+/* An Eight Parts clearing chart is a temporary view within its question workflow. */
+#prompt-library-home .haven-inplace-clearing-section.section.active {
+  display:block !important;
+  width:100% !important;
+  max-width:100% !important;
+  min-width:0 !important;
+  margin:14px 0 !important;
+  grid-column:1 / -1 !important;
+  clear:both !important;
+}
+#prompt-library-home .haven-inplace-clearing-section > .section-head,
+#prompt-library-home .haven-inplace-clearing-section > .toolbox-return-bar {display:none !important;}
+.haven-inplace-return {
+  display:block; width:100%; margin:0 0 16px; padding:13px 16px;
+  color:#0a0907; font-weight:800; text-align:center; cursor:pointer;
+  background:linear-gradient(180deg,#cda95c,#9b793b);
+  border:0; border-radius:12px;
+}
+@media(max-width:700px){
+  #prompt-library-home .haven-inplace-clearing-section.section.active,
+  #prompt-library-home .haven-inplace-clearing-section .power-modern-shell {
+    position:relative !important;
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    left:auto !important;
+    right:auto !important;
+    margin-left:0 !important;
+    margin-right:0 !important;
+    transform:none !important;
+  }
+  #prompt-library-home .haven-inplace-clearing-section .power-modern-grid,
+  #prompt-library-home .haven-inplace-clearing-section .power-modern-sections {
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  }
+}
+</style>
+<script id="haven-inplace-chart-route">
+(function(){
+  let session=null;
+  function toTop(node){
+    const box=node.getBoundingClientRect();
+    window.scrollTo({top:Math.max(0, window.scrollY+box.top-10),behavior:'instant'});
+  }
+  function returnToChartChoices(){
+    if(!session)return;
+    const {chart,marker,inline,returnButton}=session;
+    if(returnButton.isConnected)returnButton.remove();
+    chart.classList.remove('haven-inplace-clearing-section','active','app-inline-destination');
+    if(marker.parentNode){marker.before(chart);marker.remove();}
+    else (document.getElementById('content')||document.body).appendChild(chart);
+    inline.hidden=false;
+    const dashboard=document.querySelector('.section[data-section="dashboard"]');
+    if(dashboard)dashboard.classList.add('active');
+    window.currentSectionKey='dashboard';
+    session=null;
+    toTop(inline);
+  }
+  window.havenReturnToInplaceChartChoices=returnToChartChoices;
+  const original=window.promptFinderOpenChart;
+  if(typeof original!=='function')return;
+  window.promptFinderOpenChart=function(tab,special){
+    const inline=document.getElementById('prompt-library-inline-results');
+    const activeEight=inline && !inline.hidden && inline.classList.contains('haven-eight-chart-active');
+    if(!activeEight || special)return original.apply(this,arguments);
+    const chart=document.querySelector('.section[data-section="'+tab+'"]');
+    if(!chart)return;
+    if(session)returnToChartChoices();
+    const landing=document.getElementById('prompt-library-home');
+    if(!landing)return original.apply(this,arguments);
+    const marker=document.createComment('Return clearing chart to its original position');
+    chart.before(marker);
+    const returnButton=document.createElement('button');
+    returnButton.type='button';
+    returnButton.className='haven-inplace-return';
+    returnButton.textContent='← Back to Chart Choices';
+    returnButton.addEventListener('click',returnToChartChoices);
+    inline.after(chart);
+    chart.prepend(returnButton);
+    chart.classList.add('active','haven-inplace-clearing-section');
+    // Both the dashboard and the temporary chart must be visible: chart is nested
+    // in the dashboard rather than routed to the distant #content container.
+    const dashboard=document.querySelector('.section[data-section="dashboard"]');
+    if(dashboard)dashboard.classList.add('active');
+    inline.hidden=true;
+    session={chart,marker,inline,returnButton};
+    toTop(chart);
+    return;
+  };
+})();
+</script>
 </body>
 </html>
