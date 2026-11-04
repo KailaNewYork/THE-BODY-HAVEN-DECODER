@@ -4700,6 +4700,140 @@ html, body { max-width: 100%; overflow-x: hidden; }
   #content > .section.active .section-head {display:flex !important;flex-wrap:wrap !important;gap:10px !important}
 }
 
+
+/* NOV 04: Mobile drilldown depth correction.
+   Preserve the navigation and content, but remove compounded nested padding.
+   The meaningful detail cards retain one border; their ancestors stop
+   consuming the phone width at every level. */
+@media screen and (max-width:700px) {
+  #content, #content > .section, #content > .section.active,
+  #prompt-library-home, #prompt-library-inline-results,
+  .prompt-library-wrap, .prompt-library-group,
+  .haven-collection-section, .haven-eight-panel, .haven-hidden-panel {
+    min-width:0;
+    box-sizing:border-box;
+  }
+  /* Clearer parent presentation instead of another padded box per step. */
+  #content > .section.active .power-modern-shell {
+    padding:12px !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    box-sizing:border-box !important;
+  }
+  #content > .section.active .power-modern-detail {
+    padding:10px !important;
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    box-sizing:border-box !important;
+  }
+  #content > .section.active .power-flow-panel {
+    padding:10px 0 0 !important;
+    margin:12px 0 !important;
+    background:transparent !important;
+    border:0 !important;
+    border-top:1px solid rgba(216,181,106,.35) !important;
+    border-radius:0 !important;
+    width:100% !important;
+    min-width:0 !important;
+  }
+  #content > .section.active .power-flow-location {
+    padding:12px 0 0 !important;
+    width:100% !important;
+    min-width:0 !important;
+  }
+  #content > .section.active .power-flow-script {
+    padding:14px !important;
+    width:100% !important;
+    min-width:0 !important;
+    margin:16px 0 0 !important;
+    box-sizing:border-box !important;
+  }
+  #content > .section.active .power-flow-script h4,
+  #content > .section.active .power-flow-script p {
+    overflow-wrap:break-word !important;
+    word-break:normal !important;
+    white-space:normal !important;
+    hyphens:none !important;
+  }
+  #content > .section.active .power-flow-script p {
+    font-size:clamp(.94rem,4vw,1.08rem) !important;
+    line-height:1.45 !important;
+  }
+  #content > .section.active .power-flow-location input,
+  #content > .section.active .power-modern-search input {
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    box-sizing:border-box !important;
+  }
+  /* Section-choice tiles are 2 columns; detailed text stays full width. */
+  #content > .section.active .power-modern-grid {
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:9px !important;
+    width:100% !important;
+  }
+  #content > .section.active .power-modern-choice {
+    min-width:0 !important;
+    padding:12px 25px 12px 10px !important;
+    overflow-wrap:break-word !important;
+    font-size:clamp(.82rem,3.7vw,1rem) !important;
+  }
+  #content > .section.active .power-modern-pair {
+    grid-template-columns:minmax(0,1fr) !important;
+    gap:10px !important;
+  }
+  #content > .section.active .power-modern-value {padding:13px !important;min-width:0 !important;}
+  #content > .section.active .power-flow-choices {
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:8px !important;
+  }
+  /* Any chart inserted into a prompt/check-in flow must not inherit the
+     two-column question-grid's narrow track. */
+  .haven-question-grid > :is(.power-modern-shell,.power-modern-detail,.power-flow-panel,.check-clearing-panel),
+  .haven-eight-grid > :is(.power-modern-shell,.power-modern-detail,.power-flow-panel,.check-clearing-panel) {
+    grid-column:1/-1 !important;
+    width:100% !important;
+    min-width:0 !important;
+  }
+  .prompt-library-group:has(.power-modern-detail),
+  .haven-collection-section:has(.power-modern-detail),
+  .haven-eight-panel:has(.power-modern-detail) {
+    padding:8px !important;
+  }
+  /* Accessible controls at the end of deep paths. */
+  #content > .section.active .power-flow-location > button {
+    max-width:100% !important;
+    white-space:normal !important;
+  }
+}
+
+
+/* When a clearing chart is opened inside a question grid, the grid itself
+   must become a full-width flow rather than leaving the chart in one track. */
+@media screen and (max-width:700px) {
+  :is(.haven-question-grid,.haven-eight-grid,.haven-subgrid,.prompt-library-home-grid,.grid,.two-col):has(.power-modern-shell),
+  :is(.haven-question-grid,.haven-eight-grid,.haven-subgrid,.prompt-library-home-grid,.grid,.two-col):has(.power-modern-detail),
+  :is(.haven-question-grid,.haven-eight-grid,.haven-subgrid,.prompt-library-home-grid,.grid,.two-col):has(.power-flow-script) {
+    display:block !important;
+    width:100% !important;
+    min-width:0 !important;
+  }
+  :is(.haven-question-grid,.haven-eight-grid,.haven-subgrid,.prompt-library-home-grid,.grid,.two-col) > :has(.power-modern-detail),
+  :is(.haven-question-grid,.haven-eight-grid,.haven-subgrid,.prompt-library-home-grid,.grid,.two-col) > :has(.power-flow-script) {
+    width:100% !important;
+    max-width:none !important;
+    min-width:0 !important;
+    grid-column:1/-1 !important;
+    box-sizing:border-box !important;
+  }
+  :is(.haven-eight-panel,.prompt-library-group,.haven-collection-section,.check-detail-view):has(.power-flow-script) {
+    padding:8px !important;
+    min-width:0 !important;
+  }
+}
+
 </style>
 <style id="haven-hidden-styles">
 #haven-hidden-cover{margin-top:14px}#haven-hidden-cover[hidden],#haven-hidden-workspace[hidden],#haven-hidden-intro[hidden]{display:none!important}
@@ -4872,10 +5006,10 @@ html, body { max-width: 100%; overflow-x: hidden; }
 #haven-eight-workspace[hidden],
 #prompt-library-inline-results[hidden] { display:none !important; }
 /* Other navigation listeners may re-show the library; the active chart route wins. */
-body:has(#prompt-library-inline-results.haven-eight-chart-active) #prompt-library-group-list,
-body:has(#prompt-library-inline-results.haven-eight-chart-active) #haven-eight-collection,
-body:has(#prompt-library-inline-results.haven-eight-chart-active) #prompt-library-dashboard-intro,
-body:has(#prompt-library-inline-results.haven-eight-chart-active) #prompt-library-experiences-intro {display:none !important;}
+body:has(#prompt-library-inline-results.haven-eight-chart-active:not([hidden])) #prompt-library-group-list,
+body:has(#prompt-library-inline-results.haven-eight-chart-active:not([hidden])) #haven-eight-collection,
+body:has(#prompt-library-inline-results.haven-eight-chart-active:not([hidden])) #prompt-library-dashboard-intro,
+body:has(#prompt-library-inline-results.haven-eight-chart-active:not([hidden])) #prompt-library-experiences-intro {display:none !important;}
 /* The native chart drilldown gets ONE contextual Back button. */
 #prompt-library-inline-results.haven-eight-chart-active > .cup-back { display:none !important; }
 @media(max-width:700px){
@@ -4914,6 +5048,21 @@ body:has(#prompt-library-inline-results.haven-eight-chart-active) #prompt-librar
  #prompt-library-home > #prompt-library-inline-results.haven-eight-chart-active{
  width:100% !important; margin:0 !important; padding:0 !important;
  }
+}
+<style id="prompt-grid-chart-full-row-fix">
+@media (max-width:700px){
+  #prompt-library-home .section.app-inline-destination{
+    display:block!important; width:calc(100vw - 28px)!important;
+    max-width:calc(100vw - 28px)!important;
+    min-width:0!important; grid-column:1 / -1!important;
+    position:relative!important; left:50%!important; transform:translateX(-50%)!important;
+    margin:14px 0!important; box-sizing:border-box!important;
+  }
+  #prompt-library-home .section.app-inline-destination > .power-modern-shell{
+    position:static!important; left:auto!important; transform:none!important;
+    width:100%!important; max-width:100%!important; min-width:0!important;
+    margin:0!important;
+  }
 }
 </style>
 </head>
@@ -5209,6 +5358,23 @@ function woundCategoryMeta() {
   });
 }
 
+// Build the complete spoken statements from the selected wound entry and body location.
+// The chart code remains an identifier, never a substitute for the restoration text.
+function woundSpokenLocation(location) {
+  const place = String(location || '').trim();
+  return place ? (/^my\s/i.test(place) ? place : 'my ' + place) : 'my ______';
+}
+function woundSpokenRemove(pair, location, origin) {
+  const nested = rootNestedRemoval('wounds', pair.remove, location, origin);
+  if (nested) return clearingStatementNoInnerQuotes(nested);
+  const sentence = clearingStatementNoInnerQuotes(pair.remove || '').replace(/[.\s]+$/, '');
+  return `I remove the ${sentence} from ${woundSpokenLocation(location)}.`;
+}
+function woundSpokenRestore(pair, location) {
+  const sentence = clearingStatementNoInnerQuotes(pair.restore || '').replace(/[.\s]+$/, '');
+  return `I activate the restore code of ${sentence} in ${woundSpokenLocation(location)}.`;
+}
+
 function renderWoundModern() {
   const panel = document.getElementById('wound-modern-panel');
   if (!panel) return;
@@ -5240,9 +5406,9 @@ function renderWoundModern() {
           <input id="wound-location-input" type="text" value="${escapeHtml(woundBlocksUI.location)}" placeholder="Enter the location found in the chart" oninput="updateWoundLocation(this.value)" />
           <div class="power-flow-script">
             <h4>Say this to remove it</h4>
-            <p id="wound-remove-phrase">“${escapeHtml(clearingStatementNoInnerQuotes(rootNestedRemoval('wounds', pair.remove, woundBlocksUI.location, woundBlocksUI.origin) || pair.remove || ''))}”</p>
+            <p id="wound-remove-phrase">“${escapeHtml(woundSpokenRemove(pair, woundBlocksUI.location, woundBlocksUI.origin))}”</p>
             <h4>Then add the restore code by saying</h4>
-            <p id="wound-restore-phrase">“I activate the restore code of the ${escapeHtml(pair.code || '')} in ${escapeHtml(woundBlocksUI.location.trim() ? (/^my\s/i.test(woundBlocksUI.location.trim()) ? woundBlocksUI.location.trim() : 'my ' + woundBlocksUI.location.trim()) : 'my ______')}.”</p>
+            <p id="wound-restore-phrase">“${escapeHtml(woundSpokenRestore(pair, woundBlocksUI.location))}”</p>
           </div>
         </div>` : ''}
       </div>
@@ -5325,11 +5491,9 @@ function updateWoundLocation(value) {
   const pair = woundModernPairs().find(p => String(p.code) === woundBlocksUI.code);
   const output = document.getElementById('wound-restore-phrase');
   if (!pair || !output) return;
-  const place = String(value || '').trim();
-  const loc = place ? (/^my\s/i.test(place) ? place : 'my ' + place) : 'my ______';
-  output.textContent = `“I activate the restore code of the ${pair.code} in ${loc}.”`;
+  output.textContent = `“${woundSpokenRestore(pair, value)}”`;
   const removal = document.getElementById('wound-remove-phrase');
-  if (removal) removal.textContent = `“${clearingStatementNoInnerQuotes(rootNestedRemoval('wounds', pair.remove, place, woundBlocksUI.origin) || pair.remove)}”`;
+  if (removal) removal.textContent = `“${woundSpokenRemove(pair, value, woundBlocksUI.origin)}”`;
 }
 function openWoundClearingLocation() {
   woundBlocksUI.locationPicking = true;
@@ -5351,7 +5515,7 @@ function returnFromWoundLocation(location) {
   woundBlocksUI.locationPicking = false;
   const prompt = document.getElementById('wound-location-return-guide');
   if (prompt) prompt.remove();
-  goToSection('wounds');
+  if(!(window.havenRestoreInplaceChartAfterLocation && window.havenRestoreInplaceChartAfterLocation('wounds'))) goToSection('wounds');
   renderWoundModern();
 }
 function returnToWoundModernRoot() {
@@ -7596,7 +7760,7 @@ function returnFromPowerLocation(location) {
   powerBlocksUI.locationPicking = false;
   const prompt = document.getElementById('power-location-return-guide');
   if (prompt) prompt.remove();
-  goToSection('power');
+  if(!(window.havenRestoreInplaceChartAfterLocation && window.havenRestoreInplaceChartAfterLocation('power'))) goToSection('power');
   renderPowerModern();
 }
 function returnToPowerModernRoot() {
@@ -7770,7 +7934,7 @@ function returnFromCoreLocation(location) {
   coreBlocksUI.locationPicking = false;
   const prompt = document.getElementById('core-location-return-guide');
   if (prompt) prompt.remove();
-  goToSection('core');
+  if(!(window.havenRestoreInplaceChartAfterLocation && window.havenRestoreInplaceChartAfterLocation('core'))) goToSection('core');
   renderCoreModern();
 }
 function returnToCoreModernRoot() {
@@ -7955,7 +8119,7 @@ function returnFromChartALocation(location) {
   chartABlocksUI.locationPicking = false;
   const prompt = document.getElementById('charta-location-return-guide');
   if (prompt) prompt.remove();
-  goToSection('charta');
+  if(!(window.havenRestoreInplaceChartAfterLocation && window.havenRestoreInplaceChartAfterLocation('charta'))) goToSection('charta');
   renderChartAModern();
 }
 function returnToChartAModernRoot() {
@@ -8230,7 +8394,7 @@ function returnFromChartBLocation(location) {
   chartBBlocksUI.locationPicking = false;
   const prompt = document.getElementById('chartb-location-return-guide');
   if (prompt) prompt.remove();
-  goToSection('chartb');
+  if(!(window.havenRestoreInplaceChartAfterLocation && window.havenRestoreInplaceChartAfterLocation('chartb'))) goToSection('chartb');
   renderChartBModern();
 }
 function returnToChartBModernRoot() {
@@ -10316,7 +10480,7 @@ function returnFromRootLocation(location) {
   rootBlocksUI.locationPicking = false;
   const prompt = document.getElementById('root-location-return-guide');
   if (prompt) prompt.remove();
-  goToSection('rootblocks');
+  if(!(window.havenRestoreInplaceChartAfterLocation && window.havenRestoreInplaceChartAfterLocation('rootblocks'))) goToSection('rootblocks');
   renderRootBlocksModern();
 }
 document.addEventListener('click', function rootLocationClick(event) {
@@ -11343,9 +11507,14 @@ function havenEightOpenPart(i){
   havenEightOpen();havenEightChoosePart(i);
   // Leave the eight part cards accessible so clicking the selected part again closes it.
   const cover=document.getElementById('haven-eight-cover');if(cover)cover.hidden=false;
+  // Show the newly opened check-in questions immediately below the part cards.
+  // Run after the cover has been restored so the scroll target is accurate.
+  if(workspace && !workspace.hidden){
+    workspace.scrollIntoView({block:'start',behavior:'instant'});
+  }
 }
 function havenEightSetGroup(group){havenEightState.group=group;havenEightRender();}
-function havenEightChoosePart(i){havenEightState.part=i;havenEightState.parity=null;havenEightState.question=null;havenEightGoto('questions');}
+function havenEightChoosePart(i){havenEightState.part=i;havenEightState.parity=null;havenEightState.question=null;havenEightGoto('questions');const work=document.getElementById('haven-eight-workspace');if(work && !work.hidden)work.scrollIntoView({block:'start',behavior:'instant'});}
 function havenEightChooseParity(p){havenEightState.parity=p;havenEightRender();}
 function havenEightQuestion(i){havenEightState.question=i;havenEightState.whyParity='all';havenEightState.whySelected=null;havenEightGoto(i===12?'permission':'question');}
 function havenEightWhyParity(v){havenEightState.whyParity=v;havenEightRender();}
@@ -11591,6 +11760,13 @@ function havenEightSetChartParity(v){havenEightState.chartParity=v;havenEightRen
       // destination inside that narrow card: use the parent grid's full row.
       spot=anchor.closest('.cup-dashboard-card');
     }
+    // A chart clicked in a two-column Prompt Library selector must occupy its
+    // OWN full row after the selector grid, not the narrow grid cell.
+    // Do not relocate the full Prompt Library or discard question state.
+    if (anchor.closest('#prompt-library-home')) {
+      const grid=anchor.closest('.precheck-grid, .haven-question-grid, .haven-subgrid, .prompt-library-home-grid, .power-modern-grid, .haven-eight-grid');
+      if (grid && !grid.closest('.section.app-inline-destination')) spot=grid;
+    }
     spot.after(node);node.classList.add('app-inline-destination');
     lastDock=node;
     return true;
@@ -11601,6 +11777,12 @@ function havenEightSetChartParity(v){havenEightState.chartParity=v;havenEightRen
     let anchor=selectedCard;
     if(!anchor && lastDock && dash.contains(lastDock) && key!=='dashboard')anchor=lastDock;
     // The root dashboard is represented by #quickStartStatic and is never docked.
+    // A location lookup from an in-place Prompt Library chart is a temporary excursion.
+    // Never dock the global location chart inside the selected removal/restoration card.
+    if(key==='locations' && document.querySelector('.haven-inplace-clearing-section')){
+      selectedCard=null;lastDock=null;userClick=false;
+      return oldGo.apply(this,arguments);
+    }
     if(key!=='dashboard' && target && anchor && dash.contains(anchor)){
       place(target,anchor);
       restoreInactive(target);
@@ -11921,6 +12103,13 @@ havenHiddenObserver.observe(document.body,{childList:true,subtree:true});
 })();
 </script>
 
+<style id="haven-chart-session-prompt-visibility">
+/* Hide the background collection ONLY while the in-place chart itself is visible. */
+body:has(#prompt-library-home .haven-inplace-clearing-section.active) #prompt-library-group-list,
+body:has(#prompt-library-home .haven-inplace-clearing-section.active) #haven-eight-collection{
+ display:none !important;
+}
+</style>
 <style id="haven-inplace-chart-route-styles">
 /* An Eight Parts clearing chart is a temporary view within its question workflow. */
 #prompt-library-home .haven-inplace-clearing-section.section.active {
@@ -11980,7 +12169,57 @@ havenHiddenObserver.observe(document.body,{childList:true,subtree:true});
     session=null;
     toTop(inline);
   }
+  // A temporary Location Chart visit must not destroy the in-place Prompt Library session.
+  window.havenRestoreInplaceChartAfterLocation=function(expectedKey){
+    if(!session || !session.chart || session.chart.dataset.section!==expectedKey)return false;
+    document.querySelectorAll('.section').forEach(el=>el.classList.remove('active'));
+    const dashboard=document.querySelector('.section[data-section="dashboard"]');
+    if(dashboard)dashboard.classList.add('active');
+    session.chart.classList.add('active','haven-inplace-clearing-section');
+    window.currentSectionKey=expectedKey;
+    // Preserve the chart's existing selected code and location; only restore visibility.
+    toTop(session.chart);
+    return true;
+  };
+  window.havenCancelInplaceLocation=function(){
+    if(!session)return false;
+    const key=session.chart.dataset.section;
+    if(window.havenRestoreInplaceChartAfterLocation(key)){
+      const guide=document.getElementById('haven-prompt-location-back');
+      if(guide)guide.remove();
+      return true;
+    }
+    return false;
+  };
   window.havenReturnToInplaceChartChoices=returnToChartChoices;
+  // If an app-level Back/Home command restores the dashboard while the temporary
+  // chart is no longer visible, recover the chart choices instead of showing a
+  // dashboard whose Prompt Library is still hidden by stale session state.
+  let pendingRecovery=false;
+  function recoverDashboardPrompt(){
+    if(pendingRecovery)return;
+    pendingRecovery=true;
+    requestAnimationFrame(()=>{
+      pendingRecovery=false;
+      if(!session)return;
+      const dashboard=document.querySelector('.section[data-section="dashboard"]');
+      if(!dashboard?.classList.contains('active'))return;
+      if(session.chart.classList.contains('active'))return;
+      returnToChartChoices();
+    });
+  }
+  const main=document.getElementById('content');
+  if(main)new MutationObserver(recoverDashboardPrompt).observe(main,{subtree:true,attributes:true,attributeFilter:['class']});
+  document.addEventListener('click',recoverDashboardPrompt,true);
+  // A full return to Higher Self also needs the temporary chart restored to its
+  // original #content position; otherwise stale chart state persists invisibly.
+  const oldReturn=window.havenEightReturnFromCharts;
+  if(typeof oldReturn==='function'){
+    window.havenEightReturnFromCharts=function(...args){
+      if(session)returnToChartChoices();
+      return oldReturn.apply(this,args);
+    };
+  }
   const original=window.promptFinderOpenChart;
   if(typeof original!=='function')return;
   window.promptFinderOpenChart=function(tab,special){
@@ -12011,6 +12250,114 @@ havenHiddenObserver.observe(document.body,{childList:true,subtree:true});
     toTop(chart);
     return;
   };
+})();
+</script>
+<style id="prompt-library-chart-full-width-final">
+@media(max-width:700px){
+ #prompt-library-home .haven-inplace-clearing-section.section.active{
+   position:relative!important;
+   box-sizing:border-box!important;
+   width:calc(100vw - 28px)!important;
+   max-width:calc(100vw - 28px)!important;
+   left:50%!important;
+   transform:translateX(-50%)!important;
+   margin:14px 0!important;
+ }
+ #prompt-library-home .haven-inplace-clearing-section.section.active > .power-modern-shell{
+   width:100%!important; max-width:100%!important; min-width:0!important;
+   position:static!important; transform:none!important;
+ }
+}
+</style>
+<script id="haven-prompt-location-back-navigation">
+(function(){
+  // Insert a conspicuous way back even when the student opens Locations but does not pick one.
+  document.addEventListener('click',function(e){
+    const b=e.target.closest('button');
+    if(!b || !/Open Clearing Location Chart/i.test(b.textContent||''))return;
+    if(!b.closest('.haven-inplace-clearing-section'))return;
+    requestAnimationFrame(()=>{
+      const location=document.querySelector('.section[data-section="locations"]');
+      if(!location)return;
+      let back=document.getElementById('haven-prompt-location-back');
+      if(!back){
+        back=document.createElement('button');back.id='haven-prompt-location-back';back.type='button';
+        back.className='ghost-btn';back.textContent='← Return to My Clearing Drilldown';
+        back.style.cssText='display:block;width:100%;min-height:48px;margin:12px 0 18px;cursor:pointer';
+        back.onclick=()=>window.havenCancelInplaceLocation?.();
+        location.insertBefore(back,location.firstChild);
+      }
+    });
+  },true);
+})();
+</script>
+<style id="haven-prompt-all-scroll-style">
+/* Only anchor the newly expanded prompt view; never change desktop styling. */
+#prompt-library-home #prompt-library-inline-results,
+#prompt-library-home #haven-eight-workspace,
+#prompt-library-home #haven-hidden-workspace,
+#prompt-library-home #haven-location-workspace {scroll-margin-top:16px;}
+</style>
+<script id="haven-prompt-all-categories-auto-scroll">
+(function(){
+  // Opened content is often rendered inside an existing library group far below
+  // the clicked tile. Focus that opened view after its DOM has been updated.
+  const targets={
+    openPromptLibraryIntroduction:'prompt-library-dashboard-intro',
+    havenEightShowIntro:'haven-eight-inline-intro',
+    havenLocationIntro:'haven-location-intro',
+    havenHiddenIntro:'haven-hidden-intro',
+    promptFinderOpenCategory:'prompt-library-inline-content',
+    havenFindItLanding:'prompt-library-inline-content',
+    havenFindItSelectSubcategory:'prompt-library-inline-content',
+    havenFindItOpenSubcategory:'prompt-library-inline-content',
+    havenFindItChooseQuestion:'prompt-library-inline-content',
+    promptFinderChooseQuestion:'prompt-library-inline-content',
+    promptFinderRenderLinks:'prompt-library-inline-content',
+    promptFinderOpenLink:'prompt-library-inline-content',
+    openPromptLibraryCategory:'prompt-library-inline-results',
+    havenLocationOpenCategory:'haven-location-workspace',
+    havenLocationOpenPlace:'haven-location-workspace',
+    havenLocationQuestions:'haven-location-workspace',
+    havenHiddenOpen:'haven-hidden-workspace',
+    havenHiddenQuestion:'haven-hidden-workspace',
+    havenHiddenSelectLink:'haven-hidden-workspace',
+    havenHiddenAnswer:'haven-hidden-workspace',
+    havenEightOpenPart:'haven-eight-workspace',
+    havenEightChoosePart:'haven-eight-workspace',
+    havenEightQuestion:'haven-eight-workspace',
+    havenEightWhySelect:'haven-eight-workspace'
+  };
+  let serial=0;
+  const visible=(el)=>el && el.getClientRects().length && !el.closest('[hidden]') && getComputedStyle(el).display!=='none';
+  const focus=(id)=>{
+    const ticket=++serial;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      if(ticket!==serial)return;
+      const root=document.getElementById('prompt-library-home');
+      const element=document.getElementById(id);
+      if(!root || !element || !root.contains(element) || !visible(element))return;
+      const target=(id==='prompt-library-inline-content' && element.firstElementChild) ? element.firstElementChild : element;
+      const top=window.scrollY + target.getBoundingClientRect().top-16;
+      window.scrollTo({top:Math.max(0,top),behavior:'instant'});
+    }));
+  };
+  for(const [name,id] of Object.entries(targets)){
+    const original=window[name];
+    if(typeof original!=='function')continue;
+    window[name]=function(...args){
+      const result=original.apply(this,args);
+      focus(id);
+      return result;
+    };
+  }
+  // Introductions and the extra prompt collections use a mix of summary/buttons.
+  // If an expandable item is opened, scroll to the revealed panel, not the library footer.
+  document.addEventListener('toggle',function(e){
+    const panel=e.target;
+    if(!(panel instanceof HTMLDetailsElement) || !panel.open || !panel.closest('#prompt-library-home'))return;
+    requestAnimationFrame(()=>{if(visible(panel))panel.scrollIntoView({block:'start',behavior:'instant'});});
+  },true);
 })();
 </script>
 </body>
